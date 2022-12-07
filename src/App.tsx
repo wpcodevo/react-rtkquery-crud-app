@@ -14,11 +14,17 @@ function AppContent() {
 
   const {
     isLoading,
+    isFetching,
     isError,
     isSuccess,
     error,
     data: notes,
-  } = useGetAllNotesQuery({ page: 1, limit: 10 });
+  } = useGetAllNotesQuery(
+    { page: 1, limit: 10 },
+    { refetchOnFocus: true, refetchOnReconnect: true }
+  );
+
+  const loading = isLoading || isFetching;
 
   useEffect(() => {
     if (isSuccess) {
@@ -36,7 +42,7 @@ function AppContent() {
       NProgress.done();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, [loading]);
 
   return (
     <div className="2xl:max-w-[90rem] max-w-[68rem] mx-auto">

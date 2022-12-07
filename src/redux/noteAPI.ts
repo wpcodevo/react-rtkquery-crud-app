@@ -2,15 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IMutateNote, INote, INoteResponse } from "./types";
 import NProgress from "nprogress";
 
+const BASEURL = "http://localhost:8000/api/notes";
+
 export const noteAPI = createApi({
   reducerPath: "noteAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASEURL }),
   tagTypes: ["Notes"],
   endpoints: (builder) => ({
     createNote: builder.mutation<INoteResponse, IMutateNote>({
       query(note) {
         return {
-          url: "/notes/",
+          url: "/",
           method: "POST",
           credentials: "include",
           body: note,
@@ -28,7 +30,7 @@ export const noteAPI = createApi({
     >({
       query({ id, note }) {
         return {
-          url: `/notes/${id}`,
+          url: `/${id}`,
           method: "PATCH",
           credentials: "include",
           body: note,
@@ -49,7 +51,7 @@ export const noteAPI = createApi({
     getNote: builder.query<INoteResponse, string>({
       query(id) {
         return {
-          url: `/notes/${id}`,
+          url: `/${id}`,
           credentials: "include",
         };
       },
@@ -58,7 +60,7 @@ export const noteAPI = createApi({
     getAllNotes: builder.query<INote[], { page: number; limit: number }>({
       query({ page, limit }) {
         return {
-          url: `/notes?page=${page}&limit=${limit}`,
+          url: `/?page=${page}&limit=${limit}`,
           credentials: "include",
         };
       },
@@ -81,7 +83,7 @@ export const noteAPI = createApi({
     deleteNote: builder.mutation<INoteResponse, string>({
       query(id) {
         return {
-          url: `/notes/${id}`,
+          url: `/${id}`,
           method: "DELETE",
           credentials: "include",
         };
