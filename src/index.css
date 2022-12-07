@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+#nprogress .bar {
+    background: #80ffff !important;
+    height: 3px !important;
+}
+
+#nprogress .spinner .spinner-icon {
+    width: 22px;
+    height: 22px;
+    border-top-color: #80ffff !important;
+    border-left-color: #80ffff !important;
+}
+
+#nprogress .spinner {
+    top: 15px;
+    left: 15px !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html{
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background-color: #ff6633;
+}
