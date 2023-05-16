@@ -39,6 +39,23 @@ const NoteItem: FC<NoteItemProps> = ({ note }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const dropdown = document.getElementById(`settings-dropdown-${note.id}`);
+
+      if (dropdown && !dropdown.contains(target)) {
+        setOpenSettings(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [note.id]);
+
   const onDeleteHandler = (noteId: string) => {
     if (window.confirm("Are you sure")) {
       deleteNote(noteId);
@@ -70,7 +87,7 @@ const NoteItem: FC<NoteItemProps> = ({ note }) => {
             <i className="bx bx-dots-horizontal-rounded"></i>
           </div>
           <div
-            id="settings-dropdown"
+            id={`settings-dropdown-${note.id}`}
             className={twMerge(
               `absolute right-0 bottom-3 z-10 w-28 text-base list-none bg-white rounded divide-y divide-gray-100 shadow`,
               `${openSettings ? "block" : "hidden"}`
